@@ -1,6 +1,306 @@
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
+
+body {
+  background-image: url('/images/site/checkerboard.jpg');
+  background-size: 500px 500px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#wrapper {
+  width: 90%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 7px solid #01b0d3;
+}
+
+/* header styles */
+header {
+  display: flex;
+}
+
+header h1 {
+  padding: 10px 0 15px 15px;
+  margin-bottom: 0;
+}
+
+.account{
+  margin-left: auto;
+  padding: 20px;
+}
+
+.account a {
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.account a:hover {
+  cursor: pointer;
+  color: #01b0d3;
+}
+
+/* navigation styles */
+nav {
+  background-color: #242332;
+  border: 10px solid #fff;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+nav li {
+  font-size: 1.3em;
+  font-weight: bold;  
+  padding: 0.2em;
+  margin: 0.2em;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+}
+
+nav li:hover {
+  color: #01b0d3;
+  cursor: pointer;
+}
+
+/* hero banner styles */ 
+.content h2 {
+  padding-left: 15px;
+  font-size: 1.8em;
+}
+
+.featured-vehicle {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.vehicle-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+  grid-column: 2/4;
+  grid-row: 1/2;
+  z-index: 999;
+  color: #01b0d3;
+}
+
+.vehicle-info h3 {
+  margin: 0.5em 0;
+  font-size: 1.5em;
+}
+
+.vehicle-info p {
+  margin: 0.5em 0;
+  font-size: 1.2em;
+}
+
+.vehicle-info img {
+  margin: 10px;
+  width: 150px;
+}
+
+.vehicle-image {
+  grid-column: 3/7;
+  grid-row: 1/2;
+}
+
+.vehicle-image img {
+  width: 100%;
+}
+
+/* vehicle details */
+.delorean-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 2rem;
+  margin-left: 1rem;
+}
+
+/* upgrades */
+.upgrades {
+  display: flex;
+  flex-direction: column;
+}
+
+.upgrades h4 {
+  margin: 0.5em 0;
+  font-size: 1.5em;
+}
+
+.upgrade-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem; 
+  padding: 2rem;
+}
+
+.upgrade-item {
+  flex: 1 1 calc(50% - 1rem);
+  box-sizing: border-box; 
+  text-align: center; 
+}
+
+.upgrade-item img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 0.3rem;
+  background-color: #01b0d3;
+  border: 1px solid #242332;
+  padding: 5px 30px 5px 30px;
+}
+
+.upgrade-item a {
+  color: #01b0d3;
+  font-size: 1.2em;
+}
+
+/* reviews */
+.reviews {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviews h4 {
+  margin: 0.5em 0;
+  font-size: 1.5em;
+}
+
+.reviews ul {
+  margin: 1em 0;
+  font-size: 1.2em;
+}
+
+.reviews li {
+  margin-bottom: 2em;
+}
+
+/* footer styles */
+footer {
+  margin: 1em;
+}
+
+/* media query for smaller screen */
+@media screen and (max-width: 768px) {
+  /* body */
+  body {
+    background-image: none;
+  }
+
+  /* wrapper */
+  #wrapper {
+    width: 100%;
+    border: 0px;
+  }
+
+  /* header */
+  header h1{
+    font-size: 1.5em;;
+  }
+
+  .account {
+    font-size: 0.8em;
+  }
+
+  /* navigation */
+  nav li {
+    font-size: 0.8em;
+  }
+
+  nav{
+    border: 0px;
+  }
+
+  /* featured vehicle */
+  .content h2 {
+    font-size: 1.2em;
+  }
+  .vehicle-info {
+    grid-column: 1/4;
+    grid-row: 1/2;
+  }
+
+  .vehicle-image {
+    grid-column: 3/8;
+    grid-row: 1/2;
+    margin-top: 0.5em;;
+  }
+  .vehicle-info h3 {
+    margin: 0.3em 0;
+    font-size: 1em;
+  }
+  
+  .vehicle-info p {
+    margin: 0.3em 0;
+    font-size: 0.8em;
+  }
+  
+  .vehicle-info img {
+    margin: 10px;
+    width: 70px;
+  }
+
+  /* vehicle details */
+  .delorean-details {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: 0.5rem;
+  }
+
+  /* reviews */
+  .reviews h4 {
+    margin: 0.5em 0;
+    font-size: 1.2em;
+  }
+  
+  .reviews ul {
+    margin: 0;
+    font-size: 0.8em;
+    padding-left: 1em;
+  }
+  
+  .reviews li {
+    margin-bottom: 1em;
+  }
+
+  /* upgrades */  
+  .upgrades h4 {
+    margin: 0.5em 0;
+    font-size: 1.2em;
+  }
+
+  .upgrade-items {
+    padding: 0;
+    gap: 0.5rem;
+  }
+
+  .upgrade-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .upgrade-item img {
+    margin: 0;
+  }
+
+  .upgrade-item a{
+    font-size: 0.8em;
+    margin-top: 0.5rem;
+  }
+
+  /* footer */
+  footer {
+    font-size: 0.8em;
+  }
 }
