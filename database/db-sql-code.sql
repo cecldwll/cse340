@@ -1,9 +1,10 @@
 -- Create a Database Type
+DROP TYPE IF EXISTS public.account_type;
 CREATE TYPE public.account_type AS ENUM
     ('Client', 'Employee', 'Admin');
 
-ALTER TYPE public.account_type
-    OWNER TO caldwell36175;
+-- ALTER TYPE public.account_type
+--     OWNER TO caldwell36175;
 
 
 -- Create the Database Tables
