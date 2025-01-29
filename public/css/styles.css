@@ -34,7 +34,6 @@ header h1 {
 }
 
 .account a:hover {
-  cursor: pointer;
   color: #01b0d3;
 }
 
@@ -42,40 +41,27 @@ header h1 {
 nav {
   background-color: #242332;
   border: 10px solid #fff;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  font-size: 1.3em;
-  font-weight: bold;  
-  padding: 0.2em;
-  margin: 0.2em;
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
 }
 
 nav ul {
   list-style-type: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
-nav li {
+nav a {
   font-size: 1.3em;
   font-weight: bold;  
-  padding: 0.2em;
-  margin: 0.2em;
+  padding: 0.5em;
+  margin: 0.5em;
   color: #fff;
   text-align: center;
   text-decoration: none;
 }
 
-nav li:hover {
+nav a:hover {
   color: #01b0d3;
-  cursor: pointer;
 }
 
 /* hero banner styles */ 
