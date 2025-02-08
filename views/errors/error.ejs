@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
-</head>
-<body>
-  <h1><%= title %></h1> <!-- Display the error title -->
-  <p><%= message %></p> <!-- Display the error message -->
-
-  <div>
-    <p>We're sorry for the inconvenience!</p>
-    <p>If you'd like, you can try going back to the <a href="/">home page</a>.</p>
-  </div>
-
-  <% if (title === '404') { %>
-    <p>I'm so sorry....I don't know what I am doing.</p>
-  <% } %>
-</body>
-</html>
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <!-- error in title puting equal at end =%>, now fixed -->
+  <% } else { res.redirect('/') } %>
+  
+  <p><%- message %></p>
+  <!-- error to put message out of p -->

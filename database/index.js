@@ -1,19 +1,21 @@
 const { Pool } = require("pg"); // import the 'pool' functionality from "pg" package
-require("dotenv").config(); // import the  "dotenv" package
+const dotenv = require("dotenv");
+dotenv.config(); // import the  "dotenv" package
+
 /* ******************************* // multiline comment about the ssl code found in the connection pool function
  * Connection Pool
  * SSL Object needed for local testing of app
  * But will cause problems in production environment
  * If - else will make determination which to use
  *******************************/
-let pool // creates a local pool variable to hold the Pool connection
+let pool; // creates a local pool variable to hold the Pool connection
 if (process.env.NODE_ENV == "development") { // an if test to see if the code exists in a dev environment
     pool = new Pool({ // creates a new pool instance from the imported Pool class
         connectionString: process.env.DATABASE_URL, //indicates how the pool will ocnnect to the database
         ssl: { // describe how the ssl is used in the connection to the database
             rejectUnauthorized: false,
         },
-    })
+    });
 
     // Added for troubleshooting queires
     // during development
@@ -28,7 +30,7 @@ if (process.env.NODE_ENV == "development") { // an if test to see if the code ex
                 throw error
             }
         },
-    }
+    };
 } else {
     pool = new Pool({ // creates a new pool instance from the Pool class
         connectionString: process.env.DATABASE_URL, // indicates the value of the connection string will be found in an environment variable
