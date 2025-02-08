@@ -1,20 +1,12 @@
-<% 
-  // content heading section
-  if (title) { 
-%>
+<!-- content heading -->
+<% if (title) { %>
   <h1><%= title %></h1>
-<% 
-  } else { 
-%>
-  <script>
-    window.location.href = '/';
-  </script>
-<% 
-  } 
-%>
+<% } else {
+  res.redirect('/')
+} %>
 
-<%-- // message block section --%>
-<%-- <%= messages %> --%>
+<!-- message block -->
+<%# messages() %>
 
-<!-- inventory items display section -->
-<%- grid %>
+<!-- inventory items display -->
+ <%- grid %>
