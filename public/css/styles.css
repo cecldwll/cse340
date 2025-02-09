@@ -251,6 +251,9 @@ footer {
   /* body */
   body {
     background-image: none;
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
   }
 
   /* wrapper */
@@ -271,10 +274,29 @@ footer {
   /* navigation */
   nav li {
     font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav a {
+    padding: 0;
+    margin: 0;
+  }
+
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Adjust as needed */
+    padding: 0;
+    margin: 0;
+    list-style: none;
   }
 
   nav{
     border: 0px;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   /* featured vehicle */
