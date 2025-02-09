@@ -88,15 +88,16 @@ Util.buildVehicleDetail = function (vehicle) {
     vehicle.inv_model
   }">
       <div class="details">
-      <h1>${vehicle.inv_make} ${vehicle.inv_model}</h1>
+      <h1>${vehicle.inv_make} ${vehicle.inv_model} Details</h1>
+        <p><strong>Year:</strong> ${vehicle.inv_year}</p>
         <p><strong>Price:</strong> $${new Intl.NumberFormat("en-US").format(
           vehicle.inv_price
         )}</p>
         <p><strong>Description:</strong> ${vehicle.inv_description}</p>
         <p><strong>Color:</strong> ${vehicle.inv_color}</p>
         <p><strong>Mileage:</strong> 
-          ${vehicle.inv_miles}
-         miles</p>
+          ${new Intl.NumberFormat("en-US").format(vehicle.inv_miles)} miles
+         </p>
       </div>
     </div>`
   ;
