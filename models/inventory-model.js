@@ -1,4 +1,4 @@
-const pool = require("../database/index"); // imports the database connection file
+const pool = require("../database/"); // imports the database connection file
 
 /* *******************************
  * Get all classification data

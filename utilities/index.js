@@ -11,68 +11,49 @@ Util.getNav = async function (req, res, next) { // creates an asynchronous funct
   list += '<li><a href="/">Home</a></li>' // add home link
   
   data.rows.forEach((row) => { // loop through classifications
-    list += `<li>` // open list item
-    list += `<a href="/classification/${row.classification_id}" title="View our ${row.classification_name} inventory">` // create anchor
-    list += `${row.classification_name}` // add classification name
-    list += `</a></li>` // close anchor and list item
+    list += "<li>" // open list item
+    list += 
+      '<a href="/inv/type/' +
+      row.classification_id +
+      '" title="See our inventory of ' +
+      row.classification_name +
+      ' vehicles">' +
+      row.classification_name +
+      "</a>";
+    list += "</li>" // close anchor and list item
   });
   
   list += "</ul>"; // close unordered list
   return list; // return generated html list
 };
 
-/* *******************************
- * Build the classification view HTML
- *******************************/
-Util.buildClassificationGrid = async function (data) {
-  let grid;
-  if (data.length > 0) {
-    grid = '<ul class="vehicle-grid" id="inv-display">';
-    data.forEach((vehicle) => {
-      grid += "<li>";
-      grid +=
-        '<a href="../../inv/detail/' +
-        vehicle.inv_id +
-        '" title="View ' +
-        vehicle.inv_make +
-        "" +
-        vehicle.inv_model +
-        'details"><img src="' +
-        vehicle.inv_thumbnail +
-        '" alt="Image of ' +
-        vehicle.inv_make +
-        "" +
-        vehicle.inv_model +
-        ' on CSE Motors" /></a>';
-      grid += '<div class="namePrice">';
-      grid += "<hr />";
-      grid += "<h2>";
-      grid +=
-        '<a href="../../inv/detail/' +
-        vehicle.inv_id +
-        '" title="View ' +
-        vehicle.inv_make +
-        "" +
-        vehicle.inv_model +
-        ' details">' +
-        vehicle.inv_make +
-        "" +
-        vehicle.inv_model +
-        "</a>";
-      grid += "</h2>";
-      grid +=
-        "<span>$" +
-        new Intl.NumberFormat("en-US").format(vehicle.inv_price) +
-        "</span>";
-      grid += "</div>";
-      grid += "</li>";
-    });
-    grid += "</ul>";
-  } else {
-    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>';
+/* **************************************
+* Build the classification view HTML
+* ************************************ */
+Util.buildClassificationGrid = async function(data){
+  let grid
+  if(data.length > 0){
+    grid = ''
+    data.forEach(vehicle => { 
+      grid += ''
+      grid +=  ''
+      grid += ''
+      grid += ''
+      grid += ''
+      grid += '' 
+      + vehicle.inv_make + ' ' + vehicle.inv_model + ''
+      grid += ''
+      grid += '$' 
+      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + ''
+      grid += ''
+      grid += ''
+    })
+    grid += ''
+  } else { 
+    grid += 'Sorry, no matching vehicles could be found.'
   }
-  return grid;
-};
+  return grid
+}
 
 /* ****************************************
  * Middleware For Handling Errors
