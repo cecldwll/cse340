@@ -187,8 +187,9 @@ footer {
 
 /* inventory display */
 #inv-display {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   grid-gap: 1rem;
   padding: 40px;
 }
