@@ -7,4 +7,7 @@ const utilities = require("../utilities");
 // Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId); // get indicates that the route will listen for the GET method, /type/... is the route being watched for, invController.... indicates the function within the invController will be used to fulfill the request
 
+// Route to build vehicle detail view
+router.get("/detail/:vehicleId", invController.buildVehicleDetail);
+
 module.exports = router; // exports the router object

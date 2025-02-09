@@ -21,4 +21,23 @@ invCont.buildByClassificationId = async function (req, res, next) { // creates a
   });
 };
 
+/* ***************************
+ *  Build vehicle detail view
+ ***************************/
+invCont.buildVehicleDetail = async function (req, res, next) {
+  const vehicle_id = req.params.vehicleId;
+  console.log(vehicle_id);
+  const vehicle = await invModel.getVehicleById(vehicle_id);
+  console.log(vehicle);
+  const vehicleHtml = utilities.buildVehicleDetail(vehicle);
+  let nav = await utilities.getNav();
+  
+  res.render("./inventory/vehicleDetail", {
+    title: `${vehicle.inv_make} ${vehicle.inv_model}`,
+    nav,
+    vehicleHtml,
+    vehicle_id
+  });
+};
+
 module.exports = invCont;
