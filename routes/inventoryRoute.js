@@ -5,14 +5,14 @@ const invController = require("../controllers/invController"); // brings the inv
 const utilities = require("../utilities");
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId); // get indicates that the route will listen for the GET method, /type/... is the route being watched for, invController.... indicates the function within the invController will be used to fulfill the request
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId)); // get indicates that the route will listen for the GET method, /type/... is the route being watched for, invController.... indicates the function within the invController will be used to fulfill the request
 
 // Route to build vehicle detail view
 router.get("/detail/:vehicleId", invController.buildVehicleDetail);
 
 // Route for error testing
-router.get("/cause-error", (req, res, next) => {
-    next(new Error("Intentional error for testing purposes"));
-});
+router.get("/cause-error", utilities.handleErrors(async (req, res) => {
+    throw new Error("Intentional error for testing purposes");
+}));
 
 module.exports = router; // exports the router object
