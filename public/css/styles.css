@@ -246,6 +246,11 @@ footer {
   width: 120px;
 }
 
+/* flash message */
+.notice li {
+  color: red;
+}
+
 /* media query for smaller screen */
 @media screen and (max-width: 768px) {
   /* body */
