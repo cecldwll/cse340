@@ -11,8 +11,6 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:vehicleId", invController.buildVehicleDetail);
 
 // Route for error testing
-router.get("/cause-error", utilities.handleErrors(async (req, res) => {
-    throw new Error("Intentional error for testing purposes");
-}));
+router.get("/cause-error", utilities.handleErrors(invController.buildVehicleDetail));
 
 module.exports = router; // exports the router object
