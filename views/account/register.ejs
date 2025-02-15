@@ -8,13 +8,6 @@
         <form class="card-body" action="/account/register" method="post">
           <fieldset>
             <p><i>All fields are required.</i></p>
-            <%- messages() %> <% if (errors) { %>
-            <ul class="notice">
-              <% errors.array().forEach(error => { %>
-              <li><%= error.msg %></li>
-              <% }) %>
-            </ul>
-            <% } %>
             <div class="form-control">
               <label class="label">
                 <span class="label-text">First Name</span>
@@ -91,5 +84,3 @@
       </div>
     </div>
   </div>
-  
-  <script src="/js/password.js"></script>
