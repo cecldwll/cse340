@@ -17,13 +17,13 @@ async function buildLogin(req, res, next) {
 *  Deliver registration view
 * *************************************** */
 async function buildRegister(req, res, next) {
-    let nav = await utilities.getNav()
-    res.render("account/register", {
-      title: "Register",
-      nav,
-      errors: null,
-    })
-  }
+  let nav = await utilities.getNav()
+  res.render("account/register", {
+    title: "Register",
+    nav,
+    errors: null,
+  })
+}
 
 /* ****************************************
 *  Process Registration
@@ -53,6 +53,7 @@ async function registerAccount(req, res) {
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
+      errors: [{ msg: "Registration failed. Try again." }],
     })
   }
 }  

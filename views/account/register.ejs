@@ -8,6 +8,14 @@
         <form class="card-body" action="/account/register" method="post">
           <fieldset>
             <p><i>All fields are required.</i></p>
+            <%- messages() %> 
+            <% if (errors && errors.length > 0) { %>  <!-- Check if errors array is present and has elements -->
+              <ul class="notice">
+                <% errors.forEach(error => { %> <!-- Use errors directly here -->
+                  <li><%= error.msg %></li>  <!-- Display the error message -->
+                <% }) %>
+              </ul>
+            <% } %>
             <div class="form-control">
               <label class="label">
                 <span class="label-text">First Name</span>
