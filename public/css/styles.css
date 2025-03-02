@@ -265,7 +265,7 @@ footer {
 }
 
 .container h1 {
-  color: #01b0d3;
+  color: #015D6F;
 }
 
 .login-content {
@@ -372,6 +372,10 @@ footer {
     width: 100%;
     overflow-x: hidden;
     margin: 0;
+  }
+
+  .container {
+    width: 100%;
   }
 
   /* wrapper */
