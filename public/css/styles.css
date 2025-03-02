@@ -360,10 +360,9 @@ footer {
   margin-bottom: 1em;
 }
 
-.alert-erro, .alert-success, .alert-danger {
+.alert-error, .alert-success, .alert-danger {
   color: red;
 }
-
 
 /* media query for smaller screen */
 @media screen and (max-width: 768px) {

@@ -136,40 +136,44 @@ invCont.buildAddInventoryView = async function (req, res, next) {
  *  Process adding an inventory item to the database
  ***************************/
 invCont.addInventory = async function (req, res, next) {
-  const {
-    classification_id,
-    inv_make,
-    inv_model,
-    inv_year,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_miles,
-    inv_color,
-  } = req.body;
-  const result = await invModel.addInventory({
-    classification_id,
-    inv_make,
-    inv_model,
-    inv_year,
-    inv_description,
-    inv_image,
-    inv_thumbnail,
-    inv_price,
-    inv_miles,
-    inv_color,
-  });
+  try {
+    const {
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    } = req.body;
 
-  if (result) {
-    req.flash("success", "Inventory item added successfully.");
-    res.redirect("/inv");
-  } else {
-    req.flash("error", "Failed to add inventory item.");
+    const result = await invModel.addInventory({
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    });
+
+    if (result) {
+      req.flash("success", "Inventory item added successfully.");
+      res.redirect("/inv");
+    } else {
+      req.flash("error", "Failed to add inventory item.");
+      res.redirect("/inv/add-inventory");
+    }
+  } catch (error) {
+    req.flash("error", "Error adding inventory: " + error.message);
     res.redirect("/inv/add-inventory");
   }
 };
-
-
 
 module.exports = invCont;

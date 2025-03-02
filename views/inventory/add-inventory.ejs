@@ -1,105 +1,174 @@
 <div class="container">
-    <% if (errors) { %>
-    <div class="alert alert-error">
-      <% errors.array().forEach(function(error) { %>
-      <p><%= error.msg %></p>
-      <% }) %>
-    </div>
-    <% } %>
-    <h1>Add Inventory Item</h1>
-    <form action="/inv/add-inventory" method="post">
-      <div class="form-control">
-        <label for="classification_id">Classification</label>
-        <%- classifications %>
-      </div>
-      <div class="form-control">
-        <label for="inv_make">Make</label>
-        <input
-          type="text"
-          name="inv_make"
-          id="inv_make"
-          value="<%= inv_make %>"
-          required
-        />
-      </div>
-      <div class="form-control">
-        <label for="inv_model">Model</label>
-        <input
-          type="text"
-          name="inv_model"
-          id="inv_model"
-          value="<%= inv_model %>"
-          required
-        />
-      </div>
-      <div class="form-control">
-        <label for="inv_year">Year</label>
-        <input
-          type="number"
-          name="inv_year"
-          id="inv_year"
-          value="<%= inv_year %>"
-          required
-        />
-      </div>
-      <div class="form-control">
-        <label for="inv_description">Description</label>
-        <textarea name="inv_description" id="inv_description" required>
-  <%= inv_description %></textarea
-        >
-      </div>
-      <div class="form-control">
-        <label for="inv_image">Image Path</label>
-        <input
-          type="text"
-          name="inv_image"
-          id="inv_image"
-          value="<%= inv_image %>"
-          required
-        />
-      </div>
-      <div class="form-control">
-        <label for="inv_thumbnail">Thumbnail Path</label>
-        <input
-          type="text"
-          name="inv_thumbnail"
-          id="inv_thumbnail"
-          value="<%= inv_thumbnail %>"
-          required
-        />
-      </div>
-      <div class="form-control">
-        <label for="inv_price">Price</label>
-        <input
-          type="number"
-          name="inv_price"
-          id="inv_price"
-          value="<%= inv_price %>"
-          required
-        />
-      </div>
-      <div class="form-control">
-        <label for="inv_miles">Miles</label>
-        <input
-          type="number"
-          name="inv_miles"
-          id="inv_miles"
-          value="<%= inv_miles %>"
-          required
-        />
-      </div>
-      <div class="form-control">
-        <label for="inv_color">Color</label>
-        <input
-          type="text"
-          name="inv_color"
-          id="inv_color"
-          value="<%= inv_color %>"
-          required
-        />
-      </div>
-      <div class="form-control">
-        <button type="submit" class="btn">Add Inventory Item</button>
-      </div>
-    </form>
+  <% if (errors && errors.length) { %>
+  <div class="alert alert-error">
+    <% errors.forEach(function(error) { %>
+    <p><%= error.msg %></p>
+    <% }) %>
   </div>
+  <% } %>
+
+  <h1>Add Inventory Item</h1>
+  <form action="/inv/add-inventory" method="post" novalidate>
+    <div class="form-control">
+      <label for="classification_id">Classification</label>
+      <%- classifications %>
+    </div>
+
+    <div class="form-control">
+      <label for="inv_make">Make</label>
+      <input
+        type="text"
+        name="inv_make"
+        id="inv_make"
+        value="<%= inv_make %>"
+        placeholder="Min of 3 characters"
+        required
+        minlength="3"
+        data-error="Make must be at least 3 characters."
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="inv_model">Model</label>
+      <input
+        type="text"
+        name="inv_model"
+        id="inv_model"
+        value="<%= inv_model %>"
+        placeholder="Min of 3 characters"
+        required
+        minlength="3"
+        data-error="Model must be at least 3 characters."
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="inv_year">Year</label>
+      <input
+        type="number"
+        name="inv_year"
+        id="inv_year"
+        value="<%= inv_year %>"
+        placeholder="4-digit year"
+        min="1886"
+        max="<%= new Date().getFullYear() %>"
+        required
+        data-error="Enter a valid 4-digit year."
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="inv_description">Description</label>
+      <textarea name="inv_description" id="inv_description" required data-error="Description is required."><%= inv_description %></textarea>
+    </div>
+
+    <div class="form-control">
+      <label for="inv_image">Image Path</label>
+      <input
+        type="text"
+        name="inv_image"
+        id="inv_image"
+        value="/images/vehicles/no-image.png"
+        required
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="inv_thumbnail">Thumbnail Path</label>
+      <input
+        type="text"
+        name="inv_thumbnail"
+        id="inv_thumbnail"
+        value="/images/vehicles/no-image.png"
+        required
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="inv_price">Price</label>
+      <input
+        type="number"
+        name="inv_price"
+        id="inv_price"
+        value="<%= inv_price %>"
+        placeholder="Decimal or integer"
+        step="0.01"
+        required
+        data-error="Price must be a valid number."
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="inv_miles">Miles</label>
+      <input
+        type="number"
+        name="inv_miles"
+        id="inv_miles"
+        value="<%= inv_miles %>"
+        placeholder="Digits only"
+        required
+        pattern="^\d+$"
+        data-error="Miles must contain digits only (no commas)."
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="inv_color">Color</label>
+      <input
+        type="text"
+        name="inv_color"
+        id="inv_color"
+        value="<%= inv_color %>"
+        placeholder="Required"
+        required
+        data-error="Color is required."
+      />
+    </div>
+
+    <div class="form-control">
+      <button type="submit" class="btn">Add Inventory Item</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.getElementById("inventoryForm").addEventListener("submit", function(event) {
+      let form = event.target;
+      let invalidFields = form.querySelectorAll(":invalid");
+  
+      if (invalidFields.length > 0) {
+          event.preventDefault(); // Stop form submission
+  
+          invalidFields.forEach(field => {
+              let message = field.getAttribute("data-error") || "Invalid input";
+              field.setCustomValidity(message);
+              
+              // Create tooltip
+              let tooltip = document.createElement("span");
+              tooltip.className = "error-tooltip";
+              tooltip.innerText = message;
+  
+              // Remove existing tooltip if any
+              let existingTooltip = field.parentElement.querySelector(".error-tooltip");
+              if (existingTooltip) existingTooltip.remove();
+  
+              field.parentElement.appendChild(tooltip);
+  
+              // Highlight field
+              field.classList.add("error-border");
+  
+              // Remove tooltip when user starts typing
+              field.addEventListener("input", function() {
+                  field.setCustomValidity("");
+                  let tooltip = field.parentElement.querySelector(".error-tooltip");
+                  if (tooltip) tooltip.remove();
+                  field.classList.remove("error-border");
+              });
+          });
+  
+          // Focus on the first invalid field
+          invalidFields[0].focus();
+      }
+  });
+  </script>
+  

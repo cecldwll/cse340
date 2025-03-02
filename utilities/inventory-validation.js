@@ -39,141 +39,102 @@ validate.classificationRules = () => {
   }
   
 
-  /*  **********************************
-  *  Add New Classification Rules
-  * ********************************* */
+  /* **********************************
+ *  Add Inventory Validation Rules
+ * ********************************* */
 validate.vehicleRules = () => {
   return [
-    // valid email is required and cannot already exist in the DB
     body("inv_make")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({ min: 3 })
-    .withMessage("The vehicle's make is required."),
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 3 })
+      .withMessage("Make must be at least 3 characters."),
 
-    // valid email is required and cannot already exist in the DB
     body("inv_model")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({ min: 3 })
-    .withMessage("The vehicle's model is required."),
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 3 })
+      .withMessage("Model must be at least 3 characters."),
 
-    // valid email is required and cannot already exist in the DB
     body("inv_year")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({ min: 4, max: 4 })
-    .isInt()
-    .withMessage("The vehicle's year is required."),
+      .trim()
+      .escape()
+      .notEmpty()
+      .isInt({ min: 1886, max: new Date().getFullYear() }) // Earliest cars appeared in 1886
+      .withMessage("Enter a valid 4-digit year."),
 
-    // valid email is required and cannot already exist in the DB
     body("inv_description")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({ min: 1 })
-    .withMessage("The vehicle's description is required."),
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Description is required."),
 
-    // valid email is required and cannot already exist in the DB
     body("inv_image")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({ min: 1 })
-    .withMessage("The vehicle's image is required."),
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Image path is required."),
 
-    // valid email is required and cannot already exist in the DB
     body("inv_thumbnail")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({ min: 1 })
-    .withMessage("The vehicle's thumbnail is required."),
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Thumbnail path is required."),
 
-    // valid email is required and cannot already exist in the DB
     body("inv_price")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isNumeric()
-    .withMessage("The vehicle's price is required."),
+      .trim()
+      .escape()
+      .notEmpty()
+      .isFloat({ min: 0 })
+      .withMessage("Price must be a valid number."),
 
-    // valid email is required and cannot already exist in the DB
     body("inv_miles")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({ min: 1 })
-    .isInt()
-    .withMessage("The vehicle's miles is required."),
+      .trim()
+      .escape()
+      .notEmpty()
+      .matches(/^\d+$/)
+      .withMessage("Miles must contain digits only (no commas)."),
 
-    // valid email is required and cannot already exist in the DB
     body("inv_color")
-    .trim()
-    .escape()
-    .notEmpty()
-    .isLength({ min: 1 })
-    .withMessage("The vehicle's color is required."),
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Color is required."),
 
-    // valid email is required and cannot already exist in the DB
     body("classification_id")
-    .trim()
-    .notEmpty()
-    .isInt()
-    .withMessage("The vehicle's classification is required."),
-    ]
-  }
+      .trim()
+      .notEmpty()
+      .isInt()
+      .withMessage("A classification must be selected."),
+  ];
+};
 
-  
 /* ******************************
- * Check data and return errors or continue to login
+ * Check inventory data and return errors
  * ***************************** */
 validate.checkVehicleData = async (req, res, next) => {
-  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
-  let errors = []
-  errors = validationResult(req)
+  let errors = validationResult(req);
+  
   if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
-    const { classification_id } = req.body
-    let list = await utilities.buildClassificationList(classification_id)
-    res.render("inventory/addvehicle", {
-      errors,
-      title: "Add New Vehicle",
-      nav,
-      list,
-      inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,
-      
-    })
-    return
-  }
-  next()
-}
+    let nav = await utilities.getNav();
+    let classifications = await utilities.buildClassificationList(req.body.classification_id);
+    
+    // Filter out "Invalid value" messages
+    let filteredErrors = errors.array().filter(error => error.msg !== "Invalid value");
 
-/* ******************************
- * Check inventory data and return errors or continue to Management view
- * ***************************** */
-validate.checkUpdateData = async (req, res, next) => {
-  const { inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
-  let errors = []
-  errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
-    const classificationSelect = await utilities.buildClassificationList(classification_id)
-    const itemName = `${inv_make} ${inv_model}`
-    res.render("inventory/edit", {
-      errors,
-      title: "Edit " + itemName,
+    res.render("inventory/add-inventory", {
+      errors: filteredErrors,
+      title: "Add Inventory Item",
       nav,
-      list: classificationSelect,
-      inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id,
-      
-    })
-    return
+      classifications,
+      ...req.body, // Repopulate form fields
+    });
+    return;
   }
-  next()
-}
+  next();
+};
+
 
 module.exports = validate;
