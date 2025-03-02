@@ -62,12 +62,18 @@ invCont.buildVehicleDetail = async function (req, res, next) {
 invCont.buildManagementView = async function (req, res, next) {
   let nav = await utilities.getNav();
   const classificationSelect = await utilities.buildClassificationList();
+  const messages = {
+    success: req.flash("success"),
+    error: req.flash("error"),
+  };
   res.render("inventory/management", {
     title: "Inventory Management",
     nav,
     classificationSelect,
+    messages,
   });
 };
+
 
 /* ***************************
  *  Build the add classification view

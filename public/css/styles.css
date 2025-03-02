@@ -356,7 +356,11 @@ footer {
   margin: 0; 
 }
 
-.alert-error {
+.management-list li {
+  margin-bottom: 1em;
+}
+
+.alert-erro, .alert-success, .alert-danger {
   color: red;
 }
 
