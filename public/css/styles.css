@@ -261,6 +261,11 @@ footer {
   width: 100%;
   max-width: 1200px;
   padding: 20px;
+  margin: 0 auto;
+}
+
+.container h1 {
+  color: #01b0d3;
 }
 
 .login-content {
@@ -342,6 +347,17 @@ footer {
 
 .signup-link a:hover {
   text-decoration: underline;
+}
+
+/* management view */
+.management-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0; 
+}
+
+.alert-error {
+  color: red;
 }
 
 

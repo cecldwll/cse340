@@ -56,4 +56,114 @@ invCont.buildVehicleDetail = async function (req, res, next) {
   }
 };
 
+/* ***************************
+ *  Build the inventory management view
+ ***************************/
+invCont.buildManagementView = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  const classificationSelect = await utilities.buildClassificationList();
+  res.render("inventory/management", {
+    title: "Inventory Management",
+    nav,
+    classificationSelect,
+  });
+};
+
+/* ***************************
+ *  Build the add classification view
+ ***************************/
+invCont.buildAddClassificationView = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  res.render("inventory/add-classification", {
+    title: "Add Classification",
+    nav,
+    errors: null,
+  });
+};
+
+/* ***************************
+ *  Process adding a classification to the database
+ ***************************/
+invCont.addClassification = async function (req, res, next) {
+  try {
+    const { classification_name } = req.body;
+    const result = await invModel.addClassification(classification_name);
+
+    if (result) {
+      req.flash("success", "Classification added successfully.");
+      res.redirect("/inv");
+    } else {
+      req.flash("error", "Failed to add classification.");
+      res.redirect("/inv/add-classification");
+    }
+  } catch (error) {
+    req.flash("error", "Failed to add classification: " + error.message);
+    res.redirect("/inv/add-classification");
+  }
+};
+
+/* ***************************
+ *  Build the add inventory view
+ ***************************/
+invCont.buildAddInventoryView = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  let classifications = await utilities.buildClassificationList();
+  res.render("inventory/add-inventory", {
+    title: "Add Inventory Item",
+    nav,
+    classifications,
+    errors: null,
+    classification_id: "",
+    inv_make: "",
+    inv_model: "",
+    inv_year: "",
+    inv_description: "",
+    inv_image: "",
+    inv_thumbnail: "",
+    inv_price: "",
+    inv_miles: "",
+    inv_color: "",
+  });
+};
+
+/* ***************************
+ *  Process adding an inventory item to the database
+ ***************************/
+invCont.addInventory = async function (req, res, next) {
+  const {
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+  } = req.body;
+  const result = await invModel.addInventory({
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+  });
+
+  if (result) {
+    req.flash("success", "Inventory item added successfully.");
+    res.redirect("/inv");
+  } else {
+    req.flash("error", "Failed to add inventory item.");
+    res.redirect("/inv/add-inventory");
+  }
+};
+
+
+
 module.exports = invCont;
