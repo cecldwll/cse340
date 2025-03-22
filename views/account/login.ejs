@@ -1,61 +1,39 @@
+<!-- if statement, if title then display title, else redirect -->
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+      res.redirect('/')
+  } %>
+  
+  <!-- message -->
+  <%- messages() %>
 
-<div class="container">
-    <div class="login-content">
-      <div class="text-center">
-        <h1>Login now!</h1>
-      </div>
-      <div class="card">
-        <form class="card-body" action="/account/login" method="post">
-          <fieldset>
-            <p><i>All fields are required.</i></p>
-            <%- messages() %> 
-            <% if (errors && errors.length > 0) { %>  <!-- Check if errors array is present and has elements -->
-              <ul class="notice">
-                <% errors.forEach(error => { %> <!-- Use errors directly here -->
-                  <li><%= error.msg %></li>  <!-- Display the error message -->
-                <% }) %>
-              </ul>
-            <% } %>
-            <div class="form-control">
-              <label class="label" id="email">
-                <span class="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                name="account_email"
-                placeholder="email"
-                required
-                value="<%= locals.account_email %>"
-              />
-            </div>
-            <div class="form-control">
-              <label class="label" >
-                <span class="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                name="account_password"
-                placeholder="password"
-                required
-                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
-                id="password"
-              />
-            </div>
-            <button type="submit" class="btn" id="pswdBtn">Login</button>
-          </fieldset>
-        </form>
-        <div>
-          <p>
-            <i>
-              Passwords must be at least 12 characters and contain at least 1
-              number, 1 capital letter and 1 special character
-            </i>
-          </p>
-        </div>
-        <div class="signup-link">
-          No account?
-          <a href="/account/register">Sign up</a>
-        </div>
-      </div>
-    </div>
-  </div>
+<% if (errors) { %>
+  <ul class="notice">
+  <% errors.array().forEach(error => { %>
+      <% if (error.msg != "Invalid value") { %>
+          <li><%= error.msg %></li>
+      <% } %>
+  <%  }) %>
+  </ul>
+  <% } %>
+  
+<!-- Inventory items display -->
+<%# login %>
+<div class="login-form-container">
+  <form id="loginForm" action="/account/login" method="post">
+      
+          <label for="account_email">Email:</label>
+          <input type="email" name="account_email" id="account_email" placeholder="email@domain.com" required value="<%= locals.account_email %>">
+      
+      
+          <label for="account_password">Password:</label>
+          <input type="password" name="account_password" id="account_password" placeholder="Password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+      
+      <button type="submit">LOGIN</button>
+          <div id="no-account">
+              <p>No account? <a id="sign-up" href="/account/register" title="Sign-up">Sign-up</a></p>
+          </div>
+      
+  </form>
+</div>

@@ -1,94 +1,45 @@
-<div class="container">
-    <div class="hero-content">
-      <div class="text-center">
-        <h1>Sign Up</h1>
-        <p>Create an account to enjoy our services.</p>
+<!-- if statement, if title then display title, else redirect -->
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+      res.redirect('/')
+} %>
+  
+<!-- message -->
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+  <% errors.array().forEach(error => { %>
+      <% if (error.msg != "Invalid value") { %>
+          <li><%= error.msg %></li>
+      <% } %>
+  <%  }) %>
+  </ul>
+  <% } %>
+  
+<!-- Register form display -->
+<div class="login-form-container">
+  <form id="registrationForm" action="/account/register" method="post">
+      <h2>All fields are require</h2>
+      
+      <label for="account_firstname" class="register">First name:</label>
+      <input type="text" class="register" name="account_firstname" id="account_firstname" placeholder="Your name" required value="<%= locals.account_firstname %>">
+  
+      <label for="account_lastname" class="register">Last name:</label>
+      <input type="text" class="register" name="account_lastname" id="account_lastname" placeholder="Your last name" required value="<%= locals.account_lastname %>">
+      
+      <label for="account_email" class="register">Email:</label>
+      <input type="email" class="register" name="account_email" id="account_email" placeholder="email@domain.com" required value="<%= locals.account_email %>">
+      
+      <label class="register" for="account_password">Password:</label>
+      <input class="register" type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" name="account_password" id="account_password" placeholder="Password" required>
+  
+      <div id="requirements">
+          <p>Password must be minimum of 12 characters and include 1 capital letter, 1 number, and 1 special character.</p>
       </div>
-      <div class="card">
-        <form class="card-body" action="/account/register" method="post">
-          <fieldset>
-            <p><i>All fields are required.</i></p>
-            <%- messages() %> 
-            <% if (errors && errors.length > 0) { %>  <!-- Check if errors array is present and has elements -->
-              <ul class="notice">
-                <% errors.forEach(error => { %> <!-- Use errors directly here -->
-                  <li><%= error.msg %></li>  <!-- Display the error message -->
-                <% }) %>
-              </ul>
-            <% } %>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">First Name</span>
-              </label>
-              <input
-                type="text"
-                name="account_firstname"
-                placeholder="First Name"
-                required
-                value="<%= locals.account_firstname %>"
-              />
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Last Name</span>
-              </label>
-              <input
-                type="text"
-                name="account_lastname"
-                placeholder="Last Name"
-                required
-                value="<%= locals.account_lastname %>"
-              />
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                name="account_email"
-                placeholder="Email"
-                required
-                value="<%= locals.account_email %>"
-              />
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                name="account_password"
-                placeholder="Password"
-                required
-                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
-                id="password"
-              />
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text">Confirm Password</span>
-              </label>
-              <input
-                type="password"
-                name="account_passwordConfirm"
-                placeholder="Confirm Password"
-                required
-                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
-              />
-            </div>
-            <div>
-              <p>
-                <i>
-                  Please make sure the password is at least 12 characters and has
-                  at least 1 uppercase character, 1 number and 1 special
-                  character.
-                </i>
-              </p>
-            </div>
-            <button type="submit" class="btn">Sign Up</button>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-  </div>
+      <span id="pswdBtn">Show password</span>
+      <button type="submit">Register</button>
+  </form>
+</div>
+<script src="/js/script.js"></script>

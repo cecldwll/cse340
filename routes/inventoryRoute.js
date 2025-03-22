@@ -1,42 +1,75 @@
-// Needed Resources
-const express = require("express"); // brings expresss into the scope of the file
-const router = new express.Router(); // use express to create a new Router object
-const invController = require("../controllers/invController"); // brings the inventory controller into this router document's scope
-const utilities = require("../utilities");
-const invValidate = require("../utilities/inventory-validation");
+// Needed Resources 
+const express = require("express")
+const router = new express.Router() 
+const invController = require("../controllers/invController")
+const utilities = require("../utilities/")
+const classValidate = require('../utilities/classification-validation')
+const vehicleValidate = require('../utilities/vehicle-validation')
+
+// Route to building management view
+router.get("/", utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.buildManagement));
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId)); // get indicates that the route will listen for the GET method, /type/... is the route being watched for, invController.... indicates the function within the invController will be used to fulfill the request
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
-// Route to build vehicle detail view
-router.get("/detail/:vehicleId", invController.buildVehicleDetail);
+// Route to build details of car view
+router.get("/detail/:classificationId", utilities.handleErrors(invController.buildDetailsId));
 
-// Route to build inventory management view
-router.get("/", invController.buildManagementView);
+// Route to build error 500
+router.get("/error/:classificationId", utilities.handleErrors(invController.buildError));
 
-// Route to build classification view
-router.get("/add-classification", utilities.handleErrors(invController.buildAddClassificationView));
+// Route to build add-classification
+router.get("/add_classification", utilities.checkAcountType, utilities.handleErrors(invController.addClassification));
 
-// Route to process adding a classification
-router.post(
-    "/add-classification",
-    invValidate.classificationRules(),
-    invValidate.checkClassificationData,
-    utilities.handleErrors(invController.addClassification)
-  );
+// Route to build add-classification rules
+router.post("/add_classification", utilities.checkAcountType, utilities.checkAcountAdmin, classValidate.classificationRules(), classValidate.checkClassData , utilities.handleErrors(invController.addNewClassification));
 
-// Route to build inventory  view
-router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventoryView));
+// Route to build add-vehicle
+router.get("/add-vehicle", utilities.checkAcountType, utilities.handleErrors(invController.addInventory));
 
-// Route to process adding an inventory item
-router.post(
-    "/add-inventory",
-    invValidate.vehicleRules(),
-    invValidate.checkVehicleData,
-    utilities.handleErrors(invController.addInventory)
-  );
+// Route to build add-vehicle
+router.post("/add-vehicle", utilities.checkAcountType, utilities.checkAcountAdmin, vehicleValidate.vehicleRules(), vehicleValidate.checkVehicleData, utilities.handleErrors(invController.addNewVehicle));
 
-// Route for error testing
-router.get("/cause-error", utilities.handleErrors(invController.buildVehicleDetail));
+// Route to JSON (injet table to innerHTML)
+router.get("/getInventory/:classification_id", utilities.checkAcountType, utilities.checkLogin, utilities.handleErrors(invController.getInventoryJSON))
 
-module.exports = router; // exports the router object
+// Route to edit items information
+router.get("/edit/:inv_id",utilities.checkLogin,  utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.editingItemsInformation))
+
+//Route post update inventory
+router.post("/update/",utilities.checkLogin,  utilities.checkAcountType, utilities.checkAcountAdmin, vehicleValidate.vehicleRules(), vehicleValidate.chechUpdateData , utilities.handleErrors(invController.updateInventory))
+
+// Route to delete (vehicle) information
+router.get("/delete/:inv_id",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.deleteItemsInformation))
+
+//Route post delete inventory
+router.post("/delete/",utilities.checkLogin,  utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.deleteInventory))
+
+// Rout to Pending approvals
+router.get("/pending-approves/",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.approve))
+
+//Route approved cassification view
+router.get("/approve/:classification_id",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.approveClass))
+
+//Route approved cassification
+router.post("/approve/",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.approvedClassification))
+
+//Route reject cassification view
+router.get("/reject/:classification_id",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.rejectClass))
+
+//Route reject cassification
+router.post("/reject/",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.rejectClassification))
+
+//Route approved Inventory view
+router.get("/approve-inv/:inv_id",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.approveInv))
+
+//Route approved Inventory
+router.post("/approve-inv/",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.approvedInventory))
+
+//Route reject Inventory view
+router.get("/reject-inv/:inv_id",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.rejectInv)) 
+
+//Route reject Inventory
+router.post("/reject-inv/",utilities.checkLogin, utilities.checkAcountType, utilities.checkAcountAdmin, utilities.handleErrors(invController.rejectInventory))
+
+module.exports = router;

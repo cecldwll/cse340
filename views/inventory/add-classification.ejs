@@ -1,31 +1,33 @@
-<div class="container">
-  <% if (errors && errors.length > 0) { %>
-  <div class="alert alert-error">
-    <% errors.forEach(error => { %>
-      <div class="flash-error"><%= error.msg %></div>
-    <% }) %>
-  </div>
-  <% } %>
+<!-- if statement, if title then display title, else redirect -->
+<% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+      res.redirect('/')
+  } %>
+  
+  <!-- message -->
+  <%- messages() %>
 
-  <% if (messages && messages.success) { %>
-  <div class="flash-success"><%= messages.success %></div>
+<% if (errors) { %>
+  <ul class="notice">
+  <% errors.array().forEach(error => { %>
+      <% if (error.msg != "Invalid value") { %>
+          <li><%= error.msg %></li>
+      <% } %>
+  <%  }) %>
+  </ul>
   <% } %>
-
-  <h1>Add Classification</h1>
-  <form action="/inv/add-classification" method="post">
-    <div class="form-control">
-      <p><i>Required. Cannot contain spaces or special characters.</i></p>
-      <input
-        type="text"
-        name="classification_name"
-        id="classification_name"
-        required
-        pattern="^[a-zA-Z0-9]+$"
-        title="No spaces or special characters allowed"
-      />
-    </div>
-    <div class="form-control">
-      <button type="submit" class="btn">Add Classification</button>
-    </div>
+  
+<!-- Inventory items display -->
+<div id="add-classification">
+  <form action="/inv/add_classification" method="post">
+          <h2>Field is required</h2>
+          <label for="classification_name">Classification Name</label>
+          <p>Name must be alphabetic chraters only</p>
+          <!-- <label for="classification_name">New Classification</label> -->
+          <input type="text" name="classification_name" id="classification_name" pattern="^[A-Z][a-z]{1,15}$" placeholder="Sedan" required value="<%= locals.classification_name %>">
+      
+      <button type="submit">Add Classification</button>
+      
   </form>
 </div>
