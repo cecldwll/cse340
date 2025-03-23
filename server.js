@@ -57,6 +57,10 @@ app.set("layout", "./layouts/layout") // not at views root
 /* ***********************
  * Routes
  *************************/
+app.use((req, res, next) => {
+  res.locals.login = req.session.loggedin ? `<a href="/logout">Logout</a>` : `<a href="/account/login">Login</a>`;
+  next();
+});
 app.use(static)
 // Index route
 // app.get("/",function(req,res){res.render("index", {title: "Home"})})
