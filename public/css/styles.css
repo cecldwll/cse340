@@ -300,7 +300,7 @@ button:hover:disabled {
   background-color: white;
   border: none;
 }
-#accountUpdate button, #changePassword button, #pswdBtn {
+#accountUpdate button, #changePassword button{
   background-color: #00698B;
   color: #fff;
   padding: 3% 12%;
