@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Rock+Salt&display=swap');
-/* font-family: 'Open Sans', sans-serif;
-font-family: 'Rock Salt', cursive; */
 /******* Change Box Model ***************/
 *,
 *:before,
@@ -30,7 +27,6 @@ body {
   border-style: solid;
   border-color: rgb(29, 190, 190);
   padding: 1%;
-  /* font-family:  'Rock Salt', cursive; */
   font-family: 'Open Sans', sans-serif
 }
 .siteName a {
@@ -50,7 +46,6 @@ body {
   font-weight: bold;
 }
 header {
-  /* font-family: 'Rock Salt', cursive; */
   font-family: 'Open Sans', sans-serif;
   display: flex;
   justify-content: space-between;
